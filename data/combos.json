@@ -1,0 +1,674 @@
+{
+    "themes": {
+        "Patriotic Administration Center": [
+            {
+                "name": "Machine Gun",
+                "button_inputs": [
+                    "Down",
+                    "Left",
+                    "Down",
+                    "Up",
+                    "Right"
+                ],
+                "function": "Quick-firing support weapon, best used when stationary.",
+                "requirements": {
+                    "level": 1
+                }
+            },
+            {
+                "name": "Anti-Material Rifle",
+                "button_inputs": [
+                    "Down",
+                    "Left",
+                    "Right",
+                    "Up",
+                    "Down"
+                ],
+                "function": "Works well against light vehicle armor at longer distances.",
+                "requirements": {
+                    "level": 2
+                }
+            },
+            {
+                "name": "Stalwart",
+                "button_inputs": [
+                    "Down",
+                    "Left",
+                    "Down",
+                    "Up",
+                    "Up",
+                    "Left"
+                ],
+                "function": "A more compact machine gun that is quicker to reload.",
+                "requirements": {
+                    "level": 2
+                }
+            },
+            {
+                "name": "Expendable Anti-Tank",
+                "button_inputs": [
+                    "Down",
+                    "Down",
+                    "Left",
+                    "Up",
+                    "Right"
+                ],
+                "function": "Single-use support weapon meant for vehicle armor for early-game usage.",
+                "requirements": {
+                    "level": 3
+                }
+            },
+            {
+                "name": "Recoiled Rifle",
+                "button_inputs": [
+                    "Down",
+                    "Left",
+                    "Right",
+                    "Right",
+                    "Left"
+                ],
+                "function": "Effective weapon against vehicle armor and can be reloaded using its support backpack.",
+                "requirements": {
+                    "level": 5
+                }
+            },
+            {
+                "name": "Flamethrower",
+                "button_inputs": [
+                    "Down",
+                    "Left",
+                    "Up",
+                    "Down",
+                    "Up"
+                ],
+                "function": "Incendiary prowess meant for close-range encounters.",
+                "requirements": {
+                    "level": 10
+                }
+            },
+            {
+                "name": "Autocannon",
+                "button_inputs": [
+                    "Down",
+                    "Left",
+                    "Down",
+                    "Up",
+                    "Up",
+                    "Right"
+                ],
+                "function": "Comes with support backpack and is best used against light vehicle armor.",
+                "requirements": {
+                    "level": 10
+                }
+            },
+            {
+                "name": "Railgun",
+                "button_inputs": [
+                    "Down",
+                    "Right",
+                    "Left",
+                    "Down",
+                    "Up",
+                    "Left",
+                    "Right"
+                ],
+                "function": "Designed for penetrating heavier armor.",
+                "requirements": {
+                    "level": 20
+                }
+            },
+            {
+                "name": "Spear",
+                "button_inputs": [
+                    "Down",
+                    "Down",
+                    "Up",
+                    "Down",
+                    "Down"
+                ],
+                "function": "Homing missile that is best used against tanks.",
+                "requirements": {
+                    "level": 20
+                }
+            }
+        ],
+        "Orbital Cannons": [
+            {
+                "name": "Orbital Gatling Barrage",
+                "button_inputs": [
+                    "Right",
+                    "Down",
+                    "Left",
+                    "Up",
+                    "Up"
+                ],
+                "function": "Defensive anti-personnel minefield.",
+                "requirements": {
+                    "level": 2
+                }
+            },
+            {
+                "name": "Orbital Airburst Strike",
+                "button_inputs": [
+                    "Right",
+                    "Right",
+                    "Right"
+                ],
+                "function": "Deadly rain of shrapnel but ineffective against heavy armor.",
+                "requirements": {
+                    "level": 5
+                }
+            },
+            {
+                "name": "Orbital 120MM HE Barrage",
+                "button_inputs": [
+                    "Right",
+                    "Down",
+                    "Left",
+                    "Right",
+                    "Down"
+                ],
+                "function": "A precise artillery salvo that targets a small area.",
+                "requirements": {
+                    "level": 5
+                }
+            },
+            {
+                "name": "Orbital 380MM HE Barrage",
+                "button_inputs": [
+                    "Right",
+                    "Down",
+                    "Up",
+                    "Up",
+                    "Left",
+                    "Down",
+                    "Down"
+                ],
+                "function": "Used to blanket a large area with explosive shells.",
+                "requirements": {
+                    "level": 8
+                }
+            },
+            {
+                "name": "Orbital Walking Barrage",
+                "button_inputs": [
+                    "Right",
+                    "Right",
+                    "Down",
+                    "Left",
+                    "Right",
+                    "Down"
+                ],
+                "function": "A linear artillery barrage that moves forward in intervals, which will help force enemies out of cover.",
+                "requirements": {
+                    "level": 10
+                }
+            },
+            {
+                "name": "Orbital Lasers",
+                "button_inputs": [
+                    "Right",
+                    "Down",
+                    "Up",
+                    "Right",
+                    "Down"
+                ],
+                "function": "A laser cannon that will move about within a designated area.",
+                "requirements": {
+                    "level": 15
+                }
+            },
+            {
+                "name": "Orbital Railcannon Strike",
+                "button_inputs": [
+                    "Right",
+                    "Up",
+                    "Down",
+                    "Down",
+                    "Right"
+                ],
+                "function": "Fires at the largest target nearest to the thrown beacon.",
+                "requirements": {
+                    "level": 20
+                }
+            }
+        ],
+        "Hangar": [
+            {
+                "name": "Eagle Strafing Run",
+                "button_inputs": [
+                    "Up",
+                    "Right",
+                    "Right"
+                ],
+                "function": "Helps clear small targets with gunfire.",
+                "requirements": {
+                    "level": 2,
+                    "credits": 1500
+                }
+            },
+            {
+                "name": "Eagle Airstrike",
+                "button_inputs": [
+                    "Up",
+                    "Right",
+                    "Down",
+                    "Right"
+                ],
+                "function": "Utilizes a barrage of bombs to clear an area.",
+                "requirements": {
+                    "level": 2
+                }
+            },
+            {
+                "name": "Eagle Cluster Bomb",
+                "button_inputs": [
+                    "Up",
+                    "Right",
+                    "Down",
+                    "Down",
+                    "Right"
+                ],
+                "function": "Clustered explosives for smaller targets.",
+                "requirements": {
+                    "level": 3
+                }
+            },
+            {
+                "name": "Eagle Napalm Airstrike",
+                "button_inputs": [
+                    "Up",
+                    "Right",
+                    "Down",
+                    "Up"
+                ],
+                "function": "Drops a wall of fire that can help stop enemies from advancing.",
+                "requirements": {
+                    "level": 5
+                }
+            },
+            {
+                "name": "Jump Pack",
+                "button_inputs": [
+                    "Down",
+                    "Up",
+                    "Up",
+                    "Down",
+                    "Up"
+                ],
+                "function": "A tool to help Helldivers get height and out of danger.",
+                "requirements": {
+                    "level": 8
+                }
+            },
+            {
+                "name": "Eagle Smoke Strike",
+                "button_inputs": [
+                    "Up",
+                    "Right",
+                    "Up",
+                    "Down"
+                ],
+                "function": "Creates smoke that helps to block enemy line of sight.",
+                "requirements": {
+                    "level": 8
+                }
+            },
+            {
+                "name": "Eagle 110MM Rocket Pods",
+                "button_inputs": [
+                    "Up",
+                    "Right",
+                    "Up",
+                    "Left"
+                ],
+                "function": "A barrage of rocket pods.",
+                "requirements": {
+                    "level": 10
+                }
+            },
+            {
+                "name": "Eagle 500KG Bomb",
+                "button_inputs": [
+                    "Up",
+                    "Right",
+                    "Down",
+                    "Down",
+                    "Down"
+                ],
+                "function": "Large, destructive bomb that destroys everything within range.",
+                "requirements": {
+                    "level": 15
+                }
+            }
+        ],
+        "Bridge": [
+            {
+                "name": "Orbital Precision Strike",
+                "button_inputs": [
+                    "Right",
+                    "Right",
+                    "Up"
+                ],
+                "function": "A single precision shot.",
+                "requirements": {
+                    "level": 1
+                }
+            },
+            {
+                "name": "Orbital Gas Strike",
+                "button_inputs": [
+                    "Right",
+                    "Right",
+                    "Down",
+                    "Right"
+                ],
+                "function": "Releases cloud of corrosive gas, harmful to both organic and robotic lifeforms.",
+                "requirements": {
+                    "level": 3
+                }
+            },
+            {
+                "name": "Orbital EMS Strike",
+                "button_inputs": [
+                    "Right",
+                    "Right",
+                    "Left",
+                    "Down"
+                ],
+                "function": "Stuns enemies within its radius, leaving them vulnerable.",
+                "requirements": {
+                    "level": 5
+                }
+            },
+            {
+                "name": "Orbital Smoke Strike",
+                "button_inputs": [
+                    "Right",
+                    "Right",
+                    "Down",
+                    "Up"
+                ],
+                "function": "Drops a thick smoke screen to block enemies’ sight.",
+                "requirements": {
+                    "level": 8
+                }
+            },
+            {
+                "name": "HMG Emplacement",
+                "button_inputs": [
+                    "Down",
+                    "Up",
+                    "Left",
+                    "Right",
+                    "Right",
+                    "Left"
+                ],
+                "function": "Drops a fortification that can be manned to wreak havoc on light-armored targets.",
+                "requirements": {
+                    "level": 10
+                }
+            },
+            {
+                "name": "Shield Generation Relay",
+                "button_inputs": [
+                    "Down",
+                    "Up",
+                    "Left",
+                    "Down",
+                    "Right",
+                    "Right"
+                ],
+                "function": "Stationary energy shield that protects you against projectiles.",
+                "requirements": {
+                    "level": 10
+                }
+            },
+            {
+                "name": "Tesla Tower",
+                "button_inputs": [
+                    "Down",
+                    "Up",
+                    "Right",
+                    "Up",
+                    "Left",
+                    "Right"
+                ],
+                "function": "Stationary structure that shoots out powerful electrical charges at close range.",
+                "requirements": {
+                    "level": 15
+                }
+            }
+        ],
+        "Engineering Bay": [
+            {
+                "name": "Anti-Personnel Minefield",
+                "button_inputs": [
+                    "Down",
+                    "Left",
+                    "Up",
+                    "Right"
+                ],
+                "function": "Halts enemy advances with blankets of mines. Triggers when targets are nearby.",
+                "requirements": {
+                    "level": 2
+                }
+            },
+            {
+                "name": "Supply Pack",
+                "button_inputs": [
+                    "Down",
+                    "Left",
+                    "Down",
+                    "Up",
+                    "Up",
+                    "Down"
+                ],
+                "function": "Supply boxes with ammunition and a backpack to distribute to fellow Helldivers.",
+                "requirements": {
+                    "level": 3
+                }
+            },
+            {
+                "name": "Grenade Launcher",
+                "button_inputs": [
+                    "Down",
+                    "Left",
+                    "Up",
+                    "Left",
+                    "Down"
+                ],
+                "function": "Effective against armored infantry, but not for vehicle armor or fortified buildings.",
+                "requirements": {
+                    "level": 5
+                }
+            },
+            {
+                "name": "Laser Cannon",
+                "button_inputs": [
+                    "Down",
+                    "Left",
+                    "Down",
+                    "Up",
+                    "Left"
+                ],
+                "function": "Laser weapon uses no ammo, watch out for overheating.",
+                "requirements": {
+                    "level": 5
+                }
+            },
+            {
+                "name": "Incendiary Mines",
+                "button_inputs": [
+                    "Down",
+                    "Left",
+                    "Left",
+                    "Down"
+                ],
+                "function": "Halts enemy advances with blankets of incendiary mines. Triggers when targets are nearby.",
+                "requirements": {
+                    "level": 8
+                }
+            },
+            {
+                "name": "\"Guard Dog\" Rover",
+                "button_inputs": [
+                    "Down",
+                    "Up",
+                    "Left",
+                    "Up",
+                    "Right",
+                    "Right"
+                ],
+                "function": "Companion drone armed with laser rifle that provides 360-degree coverage.",
+                "requirements": {
+                    "level": 10
+                }
+            },
+            {
+                "name": "Ballistic Shield Backpack",
+                "button_inputs": [
+                    "Down",
+                    "Left",
+                    "Up",
+                    "Up",
+                    "Right"
+                ],
+                "function": "Backpack that comes with a shield used in one hand to protect from small arms fire.",
+                "requirements": {
+                    "level": 12
+                }
+            },
+            {
+                "name": "Arc thrower",
+                "button_inputs": [
+                    "Down",
+                    "Right",
+                    "Up",
+                    "Left",
+                    "Down"
+                ],
+                "function": "Emits arc of lightning at close range.",
+                "requirements": {
+                    "level": 15
+                }
+            },
+            {
+                "name": "Shield Generator Pack",
+                "button_inputs": [
+                    "Down",
+                    "Up",
+                    "Left",
+                    "Right",
+                    "Left",
+                    "Right"
+                ],
+                "function": "Generates a shield to protect players from high-speed projectiles, very useful in the latter stages.",
+                "requirements": {
+                    "level": 20
+                }
+            }
+        ],
+        "Robotic Workshop": [
+            {
+                "name": "Machine Gun Sentry",
+                "button_inputs": [
+                    "Down",
+                    "Up",
+                    "Right",
+                    "Right",
+                    "Up"
+                ],
+                "function": "Automated machine gun turret that can kill friend and foe.",
+                "requirements": {
+                    "level": 3
+                }
+            },
+            {
+                "name": "Gatling Sentry",
+                "button_inputs": [
+                    "Down",
+                    "Up",
+                    "Right",
+                    "Left"
+                ],
+                "function": "Automated turret with an even higher rate of fire.",
+                "requirements": {
+                    "level": 5
+                }
+            },
+            {
+                "name": "Mortar Sentry",
+                "button_inputs": [
+                    "Down",
+                    "Up",
+                    "Right",
+                    "Right",
+                    "Down"
+                ],
+                "function": "Turret that uses powerful shells, effective for long range and targets behind cover.",
+                "requirements": {
+                    "level": 8
+                }
+            },
+            {
+                "name": "\"Guard Dog\"",
+                "button_inputs": [
+                    "Down",
+                    "Up",
+                    "Left",
+                    "Up",
+                    "Right",
+                    "Down"
+                ],
+                "function": "Companion drone armed with Liberator assault rifle that provides 360-degree coverage.",
+                "requirements": {
+                    "level": 10
+                }
+            },
+            {
+                "name": "Autocannon Sentry",
+                "button_inputs": [
+                    "Down",
+                    "Up",
+                    "Right",
+                    "Up",
+                    "Left",
+                    "Up"
+                ],
+                "function": "Fire anti-tank ammunition over a long range. Limited agility.",
+                "requirements": {
+                    "level": 13
+                }
+            },
+            {
+                "name": "Rocket Sentry",
+                "button_inputs": [
+                    "Down",
+                    "Up",
+                    "Right",
+                    "Right",
+                    "Left"
+                ],
+                "function": "Automated turret, effective against armored targets, will always target larger enemies.",
+                "requirements": {
+                    "level": 15
+                }
+            },
+            {
+                "name": "EMS Mortar Sentry",
+                "button_inputs": [
+                    "Down",
+                    "Down",
+                    "Up",
+                    "Up",
+                    "Left"
+                ],
+                "function": "Long-ranged turret that fires static field generators to slow enemies down.",
+                "requirements": {
+                    "level": 20
+                }
+            }
+        ]
+    }
+}
