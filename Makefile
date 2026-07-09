@@ -1,27 +1,31 @@
+.DEFAULT_GOAL := help
+
+help:
+	@echo "Usage: make <target>"
+	@echo ""
+	@sed -n 's/^\([a-zA-Z._-][a-zA-Z._-]*\):.*$$/  \1/p' $(MAKEFILE_LIST) | sort -u
+
+# ── Stragetagems ──────────────────────────────────────
+
+combos:
+	@echo "Name:            $(shell python3 -c "import json,random; c=json.load(open('Data/combos.json')); t=random.choice(list(c['themes'])); s=random.choice(c['themes'][t]); print(s['name'])")"
+	@echo "Inputs:          ^ v <- ->  (see main.py)"
+
 # ── Local dev ────────────────────────────────────────
 
 install:
-	cargo fetch
-
-build:
-	cargo build
+	pip install -r requirements.txt
 
 run:
-	cargo run
-
-release:
-	cargo build --release
-
-test:
-	cargo test
+	python main.py
 
 lint:
-	cargo clippy -- -D warnings
+	ruff check .
 
-fmt:
-	cargo fmt --check
+typecheck:
+	pyright .
 
-check: lint fmt build test
+check: lint typecheck
 
 # ── Worktree navigation ─────────────────────────────
 
@@ -66,5 +70,5 @@ goto:
 
 # ── Utils ────────────────────────────────────────────
 
-.PHONY: install build run release test lint fmt check
+.PHONY: combos install run lint typecheck check
 .PHONY: worktree-ls worktree-setup cd-main cd-python cd-rust cd-go goto
