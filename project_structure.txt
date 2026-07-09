@@ -1,0 +1,45 @@
+.
+├── Classes
+│   ├── end_screen.py
+│   ├── game.py
+│   ├── __init__.py
+│   ├── menu.py
+│   ├── music_player.py
+│   └── __pycache__
+│       ├── end_screen.cpython-311.pyc
+│       ├── game.cpython-311.pyc
+│       ├── __init__.cpython-311.pyc
+│       ├── menu.cpython-311.pyc
+│       └── music_player.cpython-311.pyc
+├── Config
+│   ├── config.ini
+│   └── Soundfont
+│       └── FluidR3_GM.sf2
+├── Data
+│   ├── combos.json
+│   ├── key_codes.json
+│   └── level_speed.json
+├── debug.sh
+├── __init__.py
+├── main.py
+├── Music
+│   ├── 1_stratagem_hell_theme.wav
+│   ├── 2_stratagem_hell_theme_rock.wav
+│   ├── 3_stratagem_hell_theme_progressive.wav
+│   └── A_Cup_of_Liber-Tea.mid
+├── project_structure.txt
+├── __pycache__
+│   ├── end_screen.cpython-311.pyc
+│   ├── game.cpython-311.pyc
+│   ├── menu.cpython-311.pyc
+│   ├── music_generate_hd2_theme.cpython-311.pyc
+│   ├── music_generator.cpython-311.pyc
+│   ├── music_player.cpython-311.pyc
+│   ├── music_player_midi.cpython-311.pyc
+│   └── music_sequence.cpython-311.pyc
+├── README.md
+└── Tools
+    ├── music_generator_hd2_theme.py
+    └── music_player_wav.py
+
+9 directories, 34 files
