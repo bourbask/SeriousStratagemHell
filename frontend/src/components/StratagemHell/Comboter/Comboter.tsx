@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect } from 'react';
+import { FunctionComponent, useEffect } from 'react';
 import { Box, Typography } from '@mui/material';
 import ComboShape from './ComboShape';
 import RestartButton from './RestartButton';

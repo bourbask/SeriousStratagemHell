@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import { FunctionComponent } from 'react';
 import { Stack, Typography } from '@mui/material';
 import Arrow from './Arrow';
 import { ComboProps } from '../ComboObject/types';

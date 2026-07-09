@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import { FunctionComponent } from 'react';
 import { Box, Card } from '@mui/material';
 import Dashboard from './Dashboard/Dashboard';
 import Comboter from './Comboter/Comboter';

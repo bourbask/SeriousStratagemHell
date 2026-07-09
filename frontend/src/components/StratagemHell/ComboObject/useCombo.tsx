@@ -6,7 +6,6 @@ const useCombo = (initialCombos?: Array<ComboProps>) => {
     const [currentComboIndex, setCurrentComboIndex] = useState(0);
     const [userProgress, setUserProgress] = useState(0);
     const [isGameOver, setIsGameOver] = useState(false);
-    const [failedAttempt, setFailedAttempt] = useState(false);
 
     useEffect(() => {
         // When initialCombos changes, reset everything
@@ -15,7 +14,6 @@ const useCombo = (initialCombos?: Array<ComboProps>) => {
             setCurrentComboIndex(0);
             setUserProgress(0);
             setIsGameOver(false);
-            setFailedAttempt(false);
         }
     }, [initialCombos]);
 
@@ -29,7 +27,6 @@ const useCombo = (initialCombos?: Array<ComboProps>) => {
             setUserProgress((prev) => {
                 if (prev + 1 >= currentCombo.keys.length) {
                     currentCombo.status = 'success';
-                    setFailedAttempt(false); // Reset failed attempt for the next combo
 
                     if (currentComboIndex + 1 >= updatedCombos.length) {
                         setIsGameOver(true); // No more combos
@@ -50,7 +47,6 @@ const useCombo = (initialCombos?: Array<ComboProps>) => {
 
     // Handle incorrect key press
     const handleIncorrectKey = useCallback(() => {
-        setFailedAttempt(true); // Set failed attempt to true
         setCombos((prevCombos) => {
             const updatedCombos = [...prevCombos];
             const currentCombo = updatedCombos[currentComboIndex];
@@ -74,7 +70,6 @@ const useCombo = (initialCombos?: Array<ComboProps>) => {
 
             if (expectedKey.key === key) {
                 handleCorrectKey();
-                setFailedAttempt(false); // Reset failed attempt if correct key is pressed
             } else {
                 handleIncorrectKey();
             }
@@ -94,7 +89,6 @@ const useCombo = (initialCombos?: Array<ComboProps>) => {
         setCurrentComboIndex(0);
         setUserProgress(0);
         setIsGameOver(false);
-        setFailedAttempt(false);
         console.debug('Game restarted.');
     }, []);
 
