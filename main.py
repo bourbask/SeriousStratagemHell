@@ -1,62 +1,46 @@
 import pygame
 
-from configparser import ConfigParser
-from configparser import ExtendedInterpolation
-
 from Classes.game import Game
 from Classes.menu import Menu
 from Classes.end_screen import EndScreen
 from Classes.music_player import MusicPlayer
+from Classes.scoreboard import add_score
+from Config import MUSIC_BASEPATH, SCREEN_WIDTH, SCREEN_HEIGHT
 
-from Config import MUSIC_BASEPATH, SOUNDFONT_PATH, SCREEN_WIDTH, SCREEN_HEIGHT
-
-# Initialize Pygame
 pygame.init()
+pygame.mixer.init()
 
-# Set up the screen
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-pygame.display.set_caption("Stratagem Hell")
+pygame.display.set_caption("Serious Stratagem Hell")
 
-# Initialize font
 font = pygame.font.SysFont(None, 36)
 
-# Create instances of the classes
 game = Game(screen, font)
 menu = Menu(screen, font)
 end_screen = EndScreen(screen, font)
-music_player = MusicPlayer(music_basepath=MUSIC_BASEPATH, sound_font_path=SOUNDFONT_PATH)
-# music_player.play_music_in_loop()
+music_player = MusicPlayer(MUSIC_BASEPATH)
 
-# Define game states
-MAIN_MENU = "main_menu"
-PLAYING = "playing"
-GAME_OVER = "game_over"
-
-# Initial game state
-game_state = MAIN_MENU
-
-# Main loop
 running = True
+music_started = False
+
 while running:
-    if game_state == MAIN_MENU:
-        menu.display_menu()
-        if menu.wait_for_input():
-            game_state = PLAYING
-            # Start the game when transitioning to PLAYING state
-            game.start_game()  
+    if not menu.run():
+        running = False
+        break
 
-    elif game_state == PLAYING:
-        if game.start_game():
-            game_state = GAME_OVER
+    if not music_started:
+        music_player.play_music_in_loop()
+        music_started = True
 
-    elif game_state == GAME_OVER:
-        if end_screen.display_end_screen():
-            game_state = MAIN_MENU
+    score = game.run()
+    if score is None:
+        running = False
+        break
 
-    for event in pygame.event.get():  # Handle events outside of game states
-        if event.type == pygame.QUIT:
-            running = False
+    rank = add_score(score)
+    if not end_screen.show(score, rank):
+        running = False
+        break
 
-# Stop music and quit Pygame
 music_player.stop_music()
 pygame.quit()
