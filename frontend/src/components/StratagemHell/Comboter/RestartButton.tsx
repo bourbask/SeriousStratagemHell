@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import { FunctionComponent } from 'react';
 import { Tooltip, Button } from '@mui/material';
 
 const RestartButton: FunctionComponent<{ onClick: () => void }> = function ({ onClick }) {
