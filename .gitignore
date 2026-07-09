@@ -1,2 +1,6 @@
 /seriousstratagemhell
 *.exe
+__pycache__/
+*.pyc
+target/
+seriousstratagemhell
