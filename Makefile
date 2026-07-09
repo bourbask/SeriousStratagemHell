@@ -1,26 +1,32 @@
+SHELL    := /bin/bash
+WORKROOT ?= ..
+
 .DEFAULT_GOAL := help
 
 help:
-	@echo "Usage: make <target>"
+	@echo "Usage: make <command>"
 	@echo ""
-	@sed -n 's/^\([a-zA-Z._-][a-zA-Z._-]*\):.*$$/  \1/p' $(MAKEFILE_LIST) | sort -u
+	@sed -n 's/^\([a-zA-Z0-9._/-][a-zA-Z0-9._/-]*\):.*/\1/p' $(MAKEFILE_LIST) \
+		| grep -v '^\s*\.PHONY' | sort -u | column
 
-# ── Local dev ────────────────────────────────────────
-
-install:
-	cargo fetch
-
-build:
-	cargo build
+# ── Run / Build ──────────────────────────────────────
 
 run:
 	cargo run
 
+build:
+	cargo build
+
 release:
 	cargo build --release
 
+# ── Tests / Checks ───────────────────────────────────
+
 test:
 	cargo test
+
+check:
+	$(MAKE) lint && $(MAKE) fmt && $(MAKE) build && $(MAKE) test
 
 lint:
 	cargo clippy -- -D warnings
@@ -28,50 +34,50 @@ lint:
 fmt:
 	cargo fmt --check
 
-check: lint fmt build test
+# ── Install ───────────────────────────────────────────
 
-# ── Worktree navigation ─────────────────────────────
+install:
+	cargo fetch
 
-WORKTREE_ROOT ?= ..
-BRANCHES       = main python rust go
+# ── Navigation ───────────────────────────────────────
+
+goto:
+	@echo "Usage:  make cd-<branch>              prints the cd command"
+	@echo "        eval \$$(make cd-<branch>)    executes it"
+	@echo ""
+	@echo "Branches: main python rust go"
+
+cd-main:
+	@echo cd $(WORKROOT)/ssht-main
+
+cd-python:
+	@echo cd $(WORKROOT)/ssht-python
+
+cd-rust:
+	@echo cd $(WORKROOT)/ssht-rust
+
+cd-go:
+	@echo cd $(WORKROOT)/ssht-go
 
 worktree-ls:
 	@git worktree list
 	@echo ""
-	@echo "Convention:"
-	@for b in $(BRANCHES); do \
-		wt=$(WORKTREE_ROOT)/ssht-$$b; \
+	@for b in main python rust go; do \
+		wt=$(WORKROOT)/ssht-$$b; \
 		if [ -d "$$wt" ]; then echo "  $$wt ← $$b  (exists)"; \
 		else echo "  $$wt ← $$b  (not yet created)"; fi; \
 	done
 
 worktree-setup:
 	@echo "Creating worktrees…"
-	@for b in $(BRANCHES); do \
-		wt=$(WORKTREE_ROOT)/ssht-$$b; \
+	@for b in main python rust go; do \
+		wt=$(WORKROOT)/ssht-$$b; \
 		if [ ! -d "$$wt" ]; then \
 			git worktree add "$$wt" "$$b" 2>&1 && echo "  ✔ $$wt ← $$b"; \
 		else echo "  – $$wt already exists"; fi; \
 	done
 	@echo "Done. Use: make cd-<branch>"
 
-cd-main:
-	@echo cd $(WORKTREE_ROOT)/ssht-main
-
-cd-python:
-	@echo cd $(WORKTREE_ROOT)/ssht-python
-
-cd-rust:
-	@echo cd $(WORKTREE_ROOT)/ssht-rust
-
-cd-go:
-	@echo cd $(WORKTREE_ROOT)/ssht-go
-
-goto:
-	@echo "Usage: make cd-{main,python,rust,go}   → prints the cd command"
-	@echo "       $$(make cd-python)              → executes the cd"
-
-# ── Utils ────────────────────────────────────────────
-
-.PHONY: install build run release test lint fmt check
-.PHONY: worktree-ls worktree-setup cd-main cd-python cd-rust cd-go goto
+.PHONY: help run build release test check lint fmt install goto
+.PHONY: cd-main cd-python cd-rust cd-go
+.PHONY: worktree-ls worktree-setup
