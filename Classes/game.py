@@ -5,148 +5,155 @@ import json
 
 from Config import SCREEN_WIDTH
 
-# Load level speed from JSON file
-with open('./Data/level_speed.json', 'r') as file:
-    LEVEL_SPEED = json.load(file)
+with open("./Data/level_speed.json") as f:
+    LEVEL_SPEED: dict[str, float] = json.load(f)
 
-# Load combos from JSON file
-with open('./Data/combos.json', 'r') as file:
-    COMBOS_DATA = json.load(file)
+with open("./Data/combos.json") as f:
+    COMBOS_DATA: dict = json.load(f)
 
-# Load key codes from JSON file
-with open('./Data/key_codes.json', 'r') as file:
-    KEY_CODES_DATA = json.load(file)
+with open("./Data/key_codes.json") as f:
+    KEY_CODES: dict[str, int] = json.load(f)
 
-# Define color constants
-BLACK_COLOR = (0, 0, 0)
-WHITE_COLOR = (255, 255, 255)
-GREEN_COLOR = (0, 255, 0)
+MARGIN_X = 50
+MARGIN_Y = 50
+BAR_WIDTH = SCREEN_WIDTH - 100
+BAR_HEIGHT = 20
 
-# Define margins
-MARGIN_WIDTH = 50
-MARGIN_HEIGHT = 50
 
 class Game:
-    def __init__(self, screen, font):
+    def __init__(self, screen: pygame.Surface, font: pygame.font.Font):
         self.screen = screen
         self.font = font
-        self.theme = None
-        self.stratagem = None
-        self.button_inputs = []
-        self.stratagem_title = None
-        self.start_time = None
-        self.chrono_duration = None
-        self.chrono_end = None
-        self.input_colors = [BLACK_COLOR] * len(self.button_inputs)  # Initialize all inputs to black
-        self.bar_length = SCREEN_WIDTH - 100  # Length of the time bar
-        self.bar_height = 20  # Height of the time bar
-        self.bar_color = (0, 255, 0)  # Color of the time bar
+        self.level = 1
+        self.score = 0
+        self.theme_name = ""
+        self.stratagem_name = ""
+        self.combo_keys: list[str] = []
+        self.combo_index = 0
+        self.level_speed = 10.0
+        self.round_start = 0.0
+        self.round_end = 0.0
+        self.feedback: list[tuple[str, int]] = []
 
-    def select_combo(self, level):
-        theme = random.choice(list(COMBOS_DATA['themes'].keys()))
-        stratagem = random.choice(COMBOS_DATA['themes'][theme])
-        return theme, stratagem
+    def reset(self) -> None:
+        self.level = 1
+        self.score = 0
+        self.combo_keys = []
+        self.combo_index = 0
+        self.feedback = []
 
-    def start_game(self):
-        self.theme, self.stratagem = self.select_combo(1)
-        self.button_inputs = self.stratagem['button_inputs']
-        self.stratagem_title = self.stratagem['name']
-        self.start_time = time.time()
-        self.chrono_duration = LEVEL_SPEED['1']
-        self.chrono_end = self.start_time + self.chrono_duration
+    def start_round(self) -> None:
+        theme_name = random.choice(list(COMBOS_DATA["themes"].keys()))
+        stratagem = random.choice(COMBOS_DATA["themes"][theme_name])
+        self.theme_name = theme_name
+        self.stratagem_name = stratagem["name"]
+        self.combo_keys = stratagem["button_inputs"]
+        self.combo_index = 0
+        key = str(min(self.level, len(LEVEL_SPEED)))
+        self.level_speed = LEVEL_SPEED[key]
+        self.round_start = time.time()
+        self.round_end = self.round_start + self.level_speed
+        self.feedback = []
 
-        while True:
-            self.screen.fill(WHITE_COLOR)
-            self.display_layout([MARGIN_WIDTH, MARGIN_HEIGHT])
+    def run(self) -> int | None:
+        self.reset()
+        self.start_round()
+        clock = pygame.time.Clock()
 
-            if not self.handle_time():
-                return False
+        while self.level >= 0:
+            clock.tick(60)
+            now = time.time()
+
+            if now > self.round_end:
+                return self.score
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    pygame.quit()
-                    quit()
+                    return None
                 if event.type == pygame.KEYDOWN:
-                    if not self.handle_combo_input(event.key):
-                        return False  # Return False if combo input is incorrect
+                    result = self.handle_key(event.key)
+                    if result is False:
+                        return self.score
+                    if result is True:
+                        self.advance_round()
 
-                    if not self.handle_general_keys(event.key):
-                        return False  # Return False if general key handling fails
+            self.draw()
 
-            pygame.display.update()
+        return self.score
 
-    def display_layout(self, margins):
-        self.display_general_controls(margins)
-        self.display_game_info([margins[0], margins[1] + 100])
-        self.display_combo_input([margins[0], margins[1] + 200])
+    def handle_key(self, key: int) -> bool | None:
+        expected = self.combo_keys[self.combo_index] if self.combo_index < len(self.combo_keys) else None
+        if expected is None:
+            return None
 
-    def display_combo_input(self, position: [int, int]):
-        self.display_text("Press the following inputs:", position[0], position[1])
-        self.display_text(", ".join(self.button_inputs), position[0] + 150, position[1] + 50)
+        mapped = KEY_CODES.get(expected)
+        if mapped == key:
+            self.combo_index += 1
+            if self.combo_index >= len(self.combo_keys):
+                return True
+            return None
 
-    def display_general_controls(self, position: [int, int]):
-        self.display_text("Press P to resume game", position[0], position[1])
-        self.display_text("Press M to toggle music", position[0] + 300, position[1])
-        self.draw_time_bar(position)
-
-    def display_game_info(self, position: [int, int]):
-        self.display_text("Stratagem: {}".format(self.stratagem_title), position[0], position[1])
-        self.display_text("Level: {}".format(1), position[0], position[1] + 50)
-
-    def handle_combo_input(self, key):
-        if len(self.button_inputs) > 0 and key == KEY_CODES_DATA[self.button_inputs[0]]:
-            self.button_inputs.pop(0)
-            print(self.button_inputs, self.input_colors)
-            self.input_colors.append(GREEN_COLOR)
-            if len(self.button_inputs) == 0:
-                print("Combo complete!")
-                self.reset_inputs()
-                return True  # Combo input is correct
-        elif key in [pygame.K_z, pygame.K_q, pygame.K_s, pygame.K_d]:
-            # Wrong input for the combo
-            print("Wrong input!")
-            self.reset_inputs()
-            return False  # Combo input is incorrect
-
-        return True  # No relevant combo input event
-
-    def handle_general_keys(self, key):
-        if key == pygame.K_r:
-            # Resume game
-            return True
-        elif key == pygame.K_m:
-            # Mute/unmute music
-            return True
-        # Add more general key handling logic as needed
-
-        return True  # No relevant general key event
-
-    def draw_time_bar(self, position: [int, int]):
-        # Calculate remaining time percentage
-        remaining_time = max(self.chrono_end - time.time(), 0)
-        percentage = remaining_time / self.chrono_duration
-
-        # Calculate width of the bar based on percentage
-        bar_width = int(self.bar_length * percentage)
-
-        # Draw the time bar
-        pygame.draw.rect(self.screen, self.bar_color, (position[0], position[1] + 350, bar_width, self.bar_height))
-
-    def render_inputs(self):
-        for i, (input_text, color) in enumerate(zip(self.button_inputs, self.input_colors)):
-            self.display_text(input_text, x=300 + i * 50, y=200, color=color)
-
-    def reset_inputs(self):
-        self.button_inputs, self.input_colors = self.select_combo(1)  # Reset inputs and colors for the next combo
-
-    def handle_time(self):
-        remaining_time = self.chrono_duration - (time.time() - self.start_time)
-        if remaining_time <= 0:
-            print("Out of time! Game over.")
+        is_direction = key in (pygame.K_UP, pygame.K_DOWN, pygame.K_LEFT, pygame.K_RIGHT,
+                               pygame.K_z, pygame.K_q, pygame.K_s, pygame.K_d)
+        if is_direction:
             return False
-        else:
-            return True
 
-    def display_text(self, text, x, y, color=(0, 0, 0)):
-        text_surface = self.font.render(text, True, color)
-        self.screen.blit(text_surface, (x, y))
+        return None
+
+    def advance_round(self) -> None:
+        combo_len = len(self.combo_keys)
+        self.score += combo_len * 10 * self.level
+        self.level += 1
+        self.start_round()
+
+    def draw(self) -> None:
+        self.screen.fill((255, 255, 255))
+        self.draw_time_bar()
+        self.draw_combo_display()
+        self.draw_info()
+        self.draw_feedback()
+        pygame.display.update()
+
+    def draw_info(self) -> None:
+        white = (255, 255, 255)
+        black = (0, 0, 0)
+        self.screen.fill(white)
+        self.draw_text(f"Level: {self.level}  Score: {self.score}", MARGIN_X, MARGIN_Y, black)
+        self.draw_text(f"Theme: {self.theme_name}", MARGIN_X, MARGIN_Y + 40, black)
+        self.draw_text(f"Stratagem: {self.stratagem_name}", MARGIN_X, MARGIN_Y + 80, black)
+
+    def draw_combo_display(self) -> None:
+        arrow_map = {"Up": "↑", "Down": "↓", "Left": "←", "Right": "→"}
+        start_x = MARGIN_X
+        y = MARGIN_Y + 130
+
+        for i, key_name in enumerate(self.combo_keys):
+            arrow = arrow_map.get(key_name, "?")
+            color = (0, 180, 0) if i < self.combo_index else (0, 0, 0)
+            if i == self.combo_index:
+                color = (0, 0, 220)
+
+            label = self.font.render(arrow, True, color)
+            label_rect = label.get_rect(center=(start_x + i * 55 + 25, y + 15))
+            pygame.draw.rect(self.screen, (220, 220, 255) if i == self.combo_index else (240, 240, 240),
+                             (start_x + i * 55, y, 50, 50), border_radius=6)
+            self.screen.blit(label, label_rect)
+
+    def draw_time_bar(self) -> None:
+        remaining = max(self.round_end - time.time(), 0)
+        ratio = remaining / self.level_speed
+        r = int(255 * (1 - ratio))
+        g = int(255 * ratio)
+        bar_x = MARGIN_X
+        bar_y = MARGIN_Y + 200
+        current_w = int(BAR_WIDTH * ratio)
+        pygame.draw.rect(self.screen, (200, 200, 200), (bar_x, bar_y, BAR_WIDTH, BAR_HEIGHT), border_radius=4)
+        pygame.draw.rect(self.screen, (r, g, 0), (bar_x, bar_y, current_w, BAR_HEIGHT), border_radius=4)
+
+    def draw_feedback(self) -> None:
+        fy = MARGIN_Y + 250
+        self.draw_text("↑ ↓ ← →  or  Z Q S D", MARGIN_X, fy, (120, 120, 120))
+
+    def draw_text(self, text: str, x: int, y: int, color: tuple[int, int, int] = (0, 0, 0)) -> None:
+        surf = self.font.render(text, True, color)
+        self.screen.blit(surf, (x, y))

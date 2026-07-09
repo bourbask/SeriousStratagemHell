@@ -1,49 +1,36 @@
 import os
 import pygame
-import subprocess
-import threading
+
 
 class MusicPlayer:
-    def __init__(self, music_basepath, sound_font_path):
+    def __init__(self, music_basepath: str):
         self.music_basepath = music_basepath
-        self.sound_font_path = sound_font_path
         self.music_playing = False
-        self.music_thread = None
-        self.music_type = "midi"
 
-    def play_music_in_loop(self):
+    def play_music_in_loop(self) -> None:
+        wav_files = sorted([
+            f for f in os.listdir(self.music_basepath)
+            if f.endswith(".wav")
+        ])
+        if not wav_files:
+            return
+
         self.music_playing = True
-        wav_files = [file for file in os.listdir(self.music_basepath) if file.endswith(".wav")]
-        midi_files = [file for file in os.listdir(self.music_basepath) if file.endswith(".mid")]            
+        current_index = 0
 
-        def play_music_wav():
-            current_index = 0
-            while self.music_playing:
-                wav_files[current_index].play()
-                while pygame.mixer.get_busy():
-                    pygame.time.Clock().tick(30)  # Control the frame rate
-                current_index = (current_index + 1) % len(wav_files)  # Move to the next sound file
+        while self.music_playing:
+            path = os.path.join(self.music_basepath, wav_files[current_index])
+            pygame.mixer.music.load(path)
+            pygame.mixer.music.play()
+            while pygame.mixer.music.get_busy() and self.music_playing:
+                pygame.time.Clock().tick(30)
+            current_index = (current_index + 1) % len(wav_files)
 
-        def play_music_midi():
-            current_index = 0
-            while self.music_playing:
-                midi_file_path = os.path.join(self.music_basepath, midi_files[current_index])
-                subprocess.run(["fluidsynth", "-a", "alsa", "-g", "5.0", "-i", self.sound_font_path + "FluidR3_GM.sf2", midi_file_path])
-                current_index = (current_index + 1) % len(midi_files)
-
-        if self.music_type == "wav":
-            self.music_thread = threading.Thread(target=play_music_wav)
-        else:
-            self.music_thread = threading.Thread(target=play_music_midi)
-
-        self.music_thread.start()
-
-    def stop_music(self):
+    def stop_music(self) -> None:
         self.music_playing = False
-        if self.music_thread:
-            self.music_thread.join()  # Wait for the music thread to finish
+        pygame.mixer.music.stop()
 
-    def toggle_music(self):
+    def toggle_music(self) -> None:
         if self.music_playing:
             self.stop_music()
         else:
